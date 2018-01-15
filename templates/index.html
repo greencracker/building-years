@@ -1,0 +1,367 @@
+<html lang="en">
+    <head>
+        <!-- <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+        <link rel="shortcut icon" href="https://cartodb.com/assets/favicon.ico" />
+        
+       
+       	<link rel="stylesheet" href="{{ url_for('static', filename='cartodb.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='leaflet-control-fullscreen.css') }}" />
+
+    </head>
+    <body>
+        <div class="article-text">
+        	<p><h1 style="line-height: 115%;">The age of Atlanta, mapped, and buildings worth visiting</h1></p>
+        		<p>By Maggie Lee</p>
+        		<p>(Longform version of story from <a href="https://saportareport.com/age-atlanta-mapped-buildings-visiting/" target="_blank">SaportaReport</a>, Dec. 31, 2017)
+        		<p>On New Year's Day in 1848, the perhaps 2,000 people of the little settlement of Atlanta celebrated as a official city for the first time. Just three days before, the governor's signature on a charter created a tiny city centered Downtown.</p>
+
+        		<p>Fairly few buildings those first Atlantans may have known still survive.</p>
+
+        		<p>The city hit a growth spurt as the 19th century became the 20th, and streetcars and automobiles arrived. More folks began to build homes and shops in areas like Edgewood, Kirkwood and West End. With cars, people built yet further out, to places like Home Park, Virginia Highland, Candler Park, Sylvan Hills and Washington Park.</p>
+
+        		<p>We can get a visual idea of when and where Atlantans have built and rebuilt, by checking out this map, which matches a construction year to about 118,000 homes, offices, shops and other buildings.</p>
+
+        		<p>Take the data with a little grain of salt, however. It comes from records created, and sometimes lost or damaged over more than 100 years. It comes from deeds, tax records, maps, even aerial photography, gathered by humans and computers in two counties for generations. Especially where buildings are very old or close together, there are some shortcomings. <a href="{{ url_for('static', filename='faq.html') }} " target="_blank">Read the data FAQ here.</a></p>
+
+        		<p>We also asked some Atlanta architects, historians and preservationists to pick out some of the buildings they think are most worth seeing, for beauty, for history, for any reason. Those follow the map.</p>
+
+        		 
+        	<p><h2>In some parts of Atlanta, newer construction has replaced homes which were built as the city expanded from Downtown.</h2></p>
+
+        	<p>(On a small screen? Use the fullscreen <img src="static/img/sm-fullscreen.JPG" height="16px" width="16px" float="left"> button on the map for a bigger view.)</p>
+        </div>
+        <div id="map">
+        	<aside class="layers">
+        		<h2>Filter:</h2>
+			    <ul>
+			    	<li class="layer">
+				        <span class="custom-checkbox">
+				        	<input type="checkbox" id="all_years" name="layer" checked>
+				          	<span class="box" style="background-color:lightgray;">
+				            	<span class="tick">
+				            	</span>
+				          	</span>
+				        </span>All Years
+			      	</li>
+
+
+			      	<li class="layer">
+				        <span class="custom-checkbox">
+				         	<input type="checkbox" id="before_1900" name="layer">
+				          	<span class="box" style="background-color:#D7587E;">
+				            	<span class="tick">
+				            	</span>
+				          	</span>
+				        </span>Pre-1900
+			      	</li>
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          	<input type="checkbox" id="l_1900_1919" name="layer">
+			          		<span class="box" style="background-color:#F18273;">
+			            		<span class="tick">
+			            		</span>
+			         		</span>
+			        	</span>1900-1919
+			      	</li>
+
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          	<input type="checkbox" id="l_1920_1939" name="layer">
+			          		<span class="box" style="background-color:#F5B27E;">
+			            		<span class="tick">
+			            		</span>
+			          		</span>
+			        	</span>1920-1939
+			      	</li>
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          	<input type="checkbox" id="l_1940_1959" name="layer">
+			          		<span class="box" style="background-color:#ECE1A1;">
+			            		<span class="tick">
+			            		</span>
+			          		</span>
+			        	</span>1940-1959
+			      	</li>
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          	<input type="checkbox" id="l_1960_1979" name="layer">
+			          		<span class="box" style="background-color:#9ACA8B;">
+			            		<span class="tick">
+			            		</span>
+			          		</span>
+			        	</span>1960-1979
+			      	</li>
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          	<input type="checkbox" id="l_1980_1999" name="layer">
+			          		<span class="box" style="background-color:#15B188;">
+			            		<span class="tick">
+			            		</span>
+			          		</span>
+			        	</span>1980-1999
+			      	</li>
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          		<input type="checkbox" id="l_2000_2015" name="layer">
+			          		<span class="box" style="background-color:#009592;">
+			            		<span class="tick">
+			            		</span>
+			          		</span>
+			        	</span>2000-2015
+			      	</li>
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          		<input type="checkbox" id="no_data" name="layer">
+			          		<span class="box" style="background-color:#696969;">
+			            		<span class="tick">
+			            		</span>
+			          		</span>
+			        	</span>No data
+			      	</li>
+
+			        	<a href="{{ url_for('static', filename='faq.html') }}" target="_blank">FAQ & Sources</a>
+			      	</li>
+
+			    </ul>
+	      	</aside>
+
+	      	<script src="{{ url_for('static', filename='cartodb.js') }}">
+      		</script>	
+
+
+      		<script type="infowindow/html" id="infowindow_template">
+		      <div class="cartodb-popup v2" style="max-width:100px">
+		        <a href="#close" class="cartodb-popup-close-button close">x</a>
+		         <div class="cartodb-popup-content-wrapper">
+		           <div class="cartodb-popup-header">
+		             </div>
+		               <div class="cartodb-popup-content">
+		                  <h4>Year built </h4>
+		                  <p>{% raw %}{{content.data.comments}}{% endraw %}</p>
+		               </div>
+		           </div>
+		         <div class="cartodb-popup-tip-container"></div>
+		      </div>
+		    </script>
+
+    		<script src="{{ url_for('static', filename='Leaflet.fullscreen.min.js') }}"></script>
+
+    		<script type="text/javascript">
+    			function main() {
+
+	      			$( document ).ready(function() {
+
+			        //Create the leaflet map
+			        var map = L.map('map', {
+			            zoomControl: true,
+			            fullscreenControl: true,
+			            scrollWheelZoom: false,
+			            center: [33.75,-84.4],
+			            zoom: 12,
+			            fitBounds: [[33.650824, -84.536316], [33.888559, -84.299080]]
+			        });
+
+			        var basemap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+			            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+			        }).addTo(map);
+
+			        // Layers definition
+			        var layers = {
+			          'all_years': {
+			            sql: 'SELECT * FROM building_footprints_small',
+			            cartocss: '#layer{polygon-fill: #696969;}#layer[yearbuilt < 1900] {polygon-fill: #D7587E;}#layer[yearbuilt >= 1900][yearbuilt <= 1919] {polygon-fill: #F18273;}#layer[yearbuilt >= 1920][yearbuilt <= 1939] {polygon-fill: #F5B27E;}#layer[yearbuilt >= 1940][yearbuilt <= 1959] {polygon-fill: #ECE1A1;}#layer[yearbuilt >= 1960][yearbuilt <= 1979] {polygon-fill: #9ACA8B;}#layer[yearbuilt >= 1980][yearbuilt <= 1999] {polygon-fill: #15B188;}#layer[yearbuilt >= 2000] {polygon-fill: #009592;}'
+			          },
+			          'before_1900': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt < 1900)',
+			            cartocss: '#layer{polygon-fill: #D7587E; opacity:0.9;}'
+			          },
+			          'l_1900_1919': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt >= 1900 AND yearbuilt <= 1919)',
+			            cartocss: '#layer{polygon-fill: #F18273; opacity:0.9;}'
+			          },
+			          'l_1920_1939': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt >= 1920 AND yearbuilt <= 1939)',
+			            cartocss: '#layer{polygon-fill: #F5B27E; opacity:0.9;}'
+			          },
+			          'l_1940_1959': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt >= 1940 AND yearbuilt <= 1959)',
+			            cartocss: '#layer{polygon-fill: #ECE1A1; opacity:0.9;}'
+			          },
+			          'l_1960_1979': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt >= 1960 AND yearbuilt <= 1979)',
+			            cartocss: '#layer{polygon-fill: #9ACA8B;opacity:0.9;}'
+			          },
+			          'l_1980_1999': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt >= 1980 AND yearbuilt <= 1999)',
+			            cartocss: '#layer{polygon-fill: #15B188;opacity:0.9;}'
+			          },
+			          'l_2000_2015': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt >= 2000)',
+			            cartocss: '#layer{polygon-fill: #009592;opacity:0.9;}'
+			          },
+			          'no_data': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt is null)',
+			            cartocss: '#layer{polygon-fill: #696969;opacity:0.9;}'
+			          }
+			        }
+
+			        cartodb.createLayer(map,{
+			            user_name: 'maggielee',
+			            type: 'cartodb',
+			            sublayers: [],
+			          	}, {https: true})
+			          
+			          	.addTo(map)
+			          	.done(function(layer){
+							layer.createSubLayer(layers['all_years'])
+
+	            			cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), ['comments'],
+	            			{infowindowTemplate: $('#infowindow_template').html()});
+
+
+		            		// When the layers inputs change fire this
+
+		            		$("input[name='layer']").change(function(){
+
+		            		// Close any popups that are popped up
+		            		$('.cartodb-infowindow' ).css('visibility', 'hidden');	
+	              
+		              		// remove whatever layer is there
+
+		              		layer.getSubLayers().forEach(function(sublayer){sublayer.remove()});
+
+		              		// "All years" needs special treatment.
+		              		// if All years is checked, I want to clear all the other checkboxes.
+		              		// so I verify and see if all_years was the last thing clicked.
+		              		// If so, was it clicked on or off?
+		              		// if clicked on, just load the all_years layer and uncheck all other boxes
+
+	              			if ($(this).attr("id") == 'all_years') {
+	                			if (document.getElementById('all_years').checked) {
+	                  				layer.createSubLayer(layers['all_years'])
+
+	                  				cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), 
+	                  				['comments'],
+	                  				{infowindowTemplate: $('#infowindow_template').html()}
+	                  				);
+
+	                  				document.getElementById("before_1900").checked = false;
+			                		document.getElementById("l_1900_1919").checked = false;
+			                		document.getElementById("l_1920_1939").checked = false;
+			                		document.getElementById("l_1940_1959").checked = false;
+			                		document.getElementById("l_1960_1979").checked = false;
+			                		document.getElementById("l_1980_1999").checked = false;
+			                		document.getElementById("l_2000_2015").checked = false;
+			                		document.getElementById("no_data").checked = false;
+
+	                			} else {
+	                  			// if all_years was clicked off, don't do anything. Just empty map. 
+	                			}
+	              				} else {
+	                				// but if anything besides "All years" was clicked on or off
+	                				// create sublayers for whatever checkboxes are on or off
+
+	                				// clear the "all years checkbox"
+	                				document.getElementById("all_years").checked = false;
+
+	                				// and create the maps for every layer that is checked
+	               					$.each($("input[name='layer']:checked"), function(){
+	                    				layer.createSubLayer(layers[$(this).attr("id")]);
+	                				}); // close $.each
+
+	                				var num_sublayers = layer.getSubLayerCount();
+	                  
+	                				for (var i = 0; i < num_sublayers; i++ ){
+	                  					// console.log ("number of sublayers is:")
+	                  					// console.log(i);
+	                  
+	                  					cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(i), 
+	                  					['comments'],
+	                  					{infowindowTemplate: $('#infowindow_template').html()}
+	                  					);
+	                				};
+
+	              				}	 // close else statement
+	            			}); // close the onchange 
+	        			});// close function
+	      			}); // close first function
+				}; //close function main()
+      
+      		//IE 7 & 8 fix?
+
+		    if ($.browser.msie && parseInt($.browser.version) < 9) {
+		        var inputs = $('.custom-checkbox input');
+		        inputs.live('change', function () {
+		        var ref = $(this),
+		        wrapper = ref.parent();
+		        if (ref.is(':checked')) 
+		          wrapper.addClass('checked');
+		        else wrapper.removeClass('checked');
+		        });
+		          inputs.trigger('change');
+		        }
+
+		       window.onload = main;
+
+      		</script>
+
+    </div> <!-- close div.map -->
+    <div class="article-text">
+
+	   {% for obj in object_list %}
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>{{ obj.name }}</h2>
+		   	<br><p>{{ obj.neighborhood }}</p>
+		   	<br>
+		   		{% if obj.map_link %}
+		   			<p><a href="{{ obj.map_link}}" target="_blank">{{ obj.address }}</a></p>
+		   		{% else %}
+		   			<p>{{ obj.address|safe }}</p>
+		   		{% endif %}
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="{{ obj.bldg_gallery }}" target="_blank">
+		    		<img src="{{ url_for('static', filename='img/' ~ obj.bldg_pic) }}" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 {{ obj.description|safe }}
+		   </div>
+
+		   <div>
+		   		{% if obj.bldg_info_url %}
+					<p><a href="{{ obj.bldg_info_url }}" target="_blank">More info</a></p>
+				{% else %}
+					{{ obj.bldg_info_multi|safe }}
+				{% endif %}
+		   </div>
+
+		   <div>
+		   		
+		   		{% if obj.bldg_gallery %}
+		   			<p><a href="{{ obj.bldg_gallery }}" target="_blank">Gallery</a></p>
+		   		{% endif %}
+		   </div>
+
+	    
+	    {% endfor %}
+
+
+		</table>
+	</div> <!-- close div.article-text -->
+    </body>
+</html>

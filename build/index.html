@@ -1,0 +1,1263 @@
+<html lang="en">
+    <head>
+        <!-- <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="static/style.css" />
+        <link rel="shortcut icon" href="https://cartodb.com/assets/favicon.ico" />
+        
+       
+       	<link rel="stylesheet" href="static/cartodb.css" />
+        <link rel="stylesheet" href="static/leaflet-control-fullscreen.css" />
+
+    </head>
+    <body>
+        <div class="article-text">
+        	<p><h1 style="line-height: 115%;">The age of Atlanta, mapped, and buildings worth visiting</h1></p>
+        		<p>By Maggie Lee</p>
+        		<p>(Longform version of story from <a href="https://saportareport.com/age-atlanta-mapped-buildings-visiting/" target="_blank">SaportaReport</a>, Dec. 31, 2017)
+        		<p>On New Year's Day in 1848, the perhaps 2,000 people of the little settlement of Atlanta celebrated as a official city for the first time. Just three days before, the governor's signature on a charter created a tiny city centered Downtown.</p>
+
+        		<p>Fairly few buildings those first Atlantans may have known still survive.</p>
+
+        		<p>The city hit a growth spurt as the 19th century became the 20th, and streetcars and automobiles arrived. More folks began to build homes and shops in areas like Edgewood, Kirkwood and West End. With cars, people built yet further out, to places like Home Park, Virginia Highland, Candler Park, Sylvan Hills and Washington Park.</p>
+
+        		<p>We can get a visual idea of when and where Atlantans have built and rebuilt, by checking out this map, which matches a construction year to about 118,000 homes, offices, shops and other buildings.</p>
+
+        		<p>Take the data with a little grain of salt, however. It comes from records created, and sometimes lost or damaged over more than 100 years. It comes from deeds, tax records, maps, even aerial photography, gathered by humans and computers in two counties for generations. Especially where buildings are very old or close together, there are some shortcomings. <a href="static/faq.html " target="_blank">Read the data FAQ here.</a></p>
+
+        		<p>We also asked some Atlanta architects, historians and preservationists to pick out some of the buildings they think are most worth seeing, for beauty, for history, for any reason. Those follow the map.</p>
+
+        		 
+        	<p><h2>In some parts of Atlanta, newer construction has replaced homes which were built as the city expanded from Downtown.</h2></p>
+
+        	<p>(On a small screen? Use the fullscreen <img src="static/img/sm-fullscreen.JPG" height="16px" width="16px" float="left"> button on the map for a bigger view.)</p>
+        </div>
+        <div id="map">
+        	<aside class="layers">
+        		<h2>Filter:</h2>
+			    <ul>
+			    	<li class="layer">
+				        <span class="custom-checkbox">
+				        	<input type="checkbox" id="all_years" name="layer" checked>
+				          	<span class="box" style="background-color:lightgray;">
+				            	<span class="tick">
+				            	</span>
+				          	</span>
+				        </span>All Years
+			      	</li>
+
+
+			      	<li class="layer">
+				        <span class="custom-checkbox">
+				         	<input type="checkbox" id="before_1900" name="layer">
+				          	<span class="box" style="background-color:#D7587E;">
+				            	<span class="tick">
+				            	</span>
+				          	</span>
+				        </span>Pre-1900
+			      	</li>
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          	<input type="checkbox" id="l_1900_1919" name="layer">
+			          		<span class="box" style="background-color:#F18273;">
+			            		<span class="tick">
+			            		</span>
+			         		</span>
+			        	</span>1900-1919
+			      	</li>
+
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          	<input type="checkbox" id="l_1920_1939" name="layer">
+			          		<span class="box" style="background-color:#F5B27E;">
+			            		<span class="tick">
+			            		</span>
+			          		</span>
+			        	</span>1920-1939
+			      	</li>
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          	<input type="checkbox" id="l_1940_1959" name="layer">
+			          		<span class="box" style="background-color:#ECE1A1;">
+			            		<span class="tick">
+			            		</span>
+			          		</span>
+			        	</span>1940-1959
+			      	</li>
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          	<input type="checkbox" id="l_1960_1979" name="layer">
+			          		<span class="box" style="background-color:#9ACA8B;">
+			            		<span class="tick">
+			            		</span>
+			          		</span>
+			        	</span>1960-1979
+			      	</li>
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          	<input type="checkbox" id="l_1980_1999" name="layer">
+			          		<span class="box" style="background-color:#15B188;">
+			            		<span class="tick">
+			            		</span>
+			          		</span>
+			        	</span>1980-1999
+			      	</li>
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          		<input type="checkbox" id="l_2000_2015" name="layer">
+			          		<span class="box" style="background-color:#009592;">
+			            		<span class="tick">
+			            		</span>
+			          		</span>
+			        	</span>2000-2015
+			      	</li>
+
+			      	<li class="layer">
+			        	<span class="custom-checkbox">
+			          		<input type="checkbox" id="no_data" name="layer">
+			          		<span class="box" style="background-color:#696969;">
+			            		<span class="tick">
+			            		</span>
+			          		</span>
+			        	</span>No data
+			      	</li>
+
+			        	<a href="static/faq.html" target="_blank">FAQ & Sources</a>
+			      	</li>
+
+			    </ul>
+	      	</aside>
+
+	      	<script src="static/cartodb.js">
+      		</script>	
+
+
+      		<script type="infowindow/html" id="infowindow_template">
+		      <div class="cartodb-popup v2" style="max-width:100px">
+		        <a href="#close" class="cartodb-popup-close-button close">x</a>
+		         <div class="cartodb-popup-content-wrapper">
+		           <div class="cartodb-popup-header">
+		             </div>
+		               <div class="cartodb-popup-content">
+		                  <h4>Year built </h4>
+		                  <p>{{content.data.comments}}</p>
+		               </div>
+		           </div>
+		         <div class="cartodb-popup-tip-container"></div>
+		      </div>
+		    </script>
+
+    		<script src="static/Leaflet.fullscreen.min.js"></script>
+
+    		<script type="text/javascript">
+    			function main() {
+
+	      			$( document ).ready(function() {
+
+			        //Create the leaflet map
+			        var map = L.map('map', {
+			            zoomControl: true,
+			            fullscreenControl: true,
+			            scrollWheelZoom: false,
+			            center: [33.75,-84.4],
+			            zoom: 12,
+			            fitBounds: [[33.650824, -84.536316], [33.888559, -84.299080]]
+			        });
+
+			        var basemap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+			            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+			        }).addTo(map);
+
+			        // Layers definition
+			        var layers = {
+			          'all_years': {
+			            sql: 'SELECT * FROM building_footprints_small',
+			            cartocss: '#layer{polygon-fill: #696969;}#layer[yearbuilt < 1900] {polygon-fill: #D7587E;}#layer[yearbuilt >= 1900][yearbuilt <= 1919] {polygon-fill: #F18273;}#layer[yearbuilt >= 1920][yearbuilt <= 1939] {polygon-fill: #F5B27E;}#layer[yearbuilt >= 1940][yearbuilt <= 1959] {polygon-fill: #ECE1A1;}#layer[yearbuilt >= 1960][yearbuilt <= 1979] {polygon-fill: #9ACA8B;}#layer[yearbuilt >= 1980][yearbuilt <= 1999] {polygon-fill: #15B188;}#layer[yearbuilt >= 2000] {polygon-fill: #009592;}'
+			          },
+			          'before_1900': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt < 1900)',
+			            cartocss: '#layer{polygon-fill: #D7587E; opacity:0.9;}'
+			          },
+			          'l_1900_1919': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt >= 1900 AND yearbuilt <= 1919)',
+			            cartocss: '#layer{polygon-fill: #F18273; opacity:0.9;}'
+			          },
+			          'l_1920_1939': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt >= 1920 AND yearbuilt <= 1939)',
+			            cartocss: '#layer{polygon-fill: #F5B27E; opacity:0.9;}'
+			          },
+			          'l_1940_1959': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt >= 1940 AND yearbuilt <= 1959)',
+			            cartocss: '#layer{polygon-fill: #ECE1A1; opacity:0.9;}'
+			          },
+			          'l_1960_1979': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt >= 1960 AND yearbuilt <= 1979)',
+			            cartocss: '#layer{polygon-fill: #9ACA8B;opacity:0.9;}'
+			          },
+			          'l_1980_1999': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt >= 1980 AND yearbuilt <= 1999)',
+			            cartocss: '#layer{polygon-fill: #15B188;opacity:0.9;}'
+			          },
+			          'l_2000_2015': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt >= 2000)',
+			            cartocss: '#layer{polygon-fill: #009592;opacity:0.9;}'
+			          },
+			          'no_data': {
+			            sql: 'SELECT * FROM building_footprints_small WHERE (yearbuilt is null)',
+			            cartocss: '#layer{polygon-fill: #696969;opacity:0.9;}'
+			          }
+			        }
+
+			        cartodb.createLayer(map,{
+			            user_name: 'maggielee',
+			            type: 'cartodb',
+			            sublayers: [],
+			          	}, {https: true})
+			          
+			          	.addTo(map)
+			          	.done(function(layer){
+							layer.createSubLayer(layers['all_years'])
+
+	            			cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), ['comments'],
+	            			{infowindowTemplate: $('#infowindow_template').html()});
+
+
+		            		// When the layers inputs change fire this
+
+		            		$("input[name='layer']").change(function(){
+
+		            		// Close any popups that are popped up
+		            		$('.cartodb-infowindow' ).css('visibility', 'hidden');	
+	              
+		              		// remove whatever layer is there
+
+		              		layer.getSubLayers().forEach(function(sublayer){sublayer.remove()});
+
+		              		// "All years" needs special treatment.
+		              		// if All years is checked, I want to clear all the other checkboxes.
+		              		// so I verify and see if all_years was the last thing clicked.
+		              		// If so, was it clicked on or off?
+		              		// if clicked on, just load the all_years layer and uncheck all other boxes
+
+	              			if ($(this).attr("id") == 'all_years') {
+	                			if (document.getElementById('all_years').checked) {
+	                  				layer.createSubLayer(layers['all_years'])
+
+	                  				cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(0), 
+	                  				['comments'],
+	                  				{infowindowTemplate: $('#infowindow_template').html()}
+	                  				);
+
+	                  				document.getElementById("before_1900").checked = false;
+			                		document.getElementById("l_1900_1919").checked = false;
+			                		document.getElementById("l_1920_1939").checked = false;
+			                		document.getElementById("l_1940_1959").checked = false;
+			                		document.getElementById("l_1960_1979").checked = false;
+			                		document.getElementById("l_1980_1999").checked = false;
+			                		document.getElementById("l_2000_2015").checked = false;
+			                		document.getElementById("no_data").checked = false;
+
+	                			} else {
+	                  			// if all_years was clicked off, don't do anything. Just empty map. 
+	                			}
+	              				} else {
+	                				// but if anything besides "All years" was clicked on or off
+	                				// create sublayers for whatever checkboxes are on or off
+
+	                				// clear the "all years checkbox"
+	                				document.getElementById("all_years").checked = false;
+
+	                				// and create the maps for every layer that is checked
+	               					$.each($("input[name='layer']:checked"), function(){
+	                    				layer.createSubLayer(layers[$(this).attr("id")]);
+	                				}); // close $.each
+
+	                				var num_sublayers = layer.getSubLayerCount();
+	                  
+	                				for (var i = 0; i < num_sublayers; i++ ){
+	                  					// console.log ("number of sublayers is:")
+	                  					// console.log(i);
+	                  
+	                  					cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(i), 
+	                  					['comments'],
+	                  					{infowindowTemplate: $('#infowindow_template').html()}
+	                  					);
+	                				};
+
+	              				}	 // close else statement
+	            			}); // close the onchange 
+	        			});// close function
+	      			}); // close first function
+				}; //close function main()
+      
+      		//IE 7 & 8 fix?
+
+		    if ($.browser.msie && parseInt($.browser.version) < 9) {
+		        var inputs = $('.custom-checkbox input');
+		        inputs.live('change', function () {
+		        var ref = $(this),
+		        wrapper = ref.parent();
+		        if (ref.is(':checked')) 
+		          wrapper.addClass('checked');
+		        else wrapper.removeClass('checked');
+		        });
+		          inputs.trigger('change');
+		        }
+
+		       window.onload = main;
+
+      		</script>
+
+    </div> <!-- close div.map -->
+    <div class="article-text">
+
+	   
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Examples of early Atlanta University, Morehouse and Spelman buildings</h2>
+		   	<br><p>Vine City and AUC</p>
+		   	<br>
+		   		
+		   			<p><p>Gaines Hall (1869, AU) and Fountain Hall (1882, AU)<br><a href="https://www.google.com/maps/place/643+M.L.K.+Jr+Dr+SW,+Atlanta,+GA+30314/@33.7549415,-84.4107796,17z/data=!3m1!4b1!4m5!3m4!1s0x88f50363730972fd:0x51d0a21f1721b218!8m2!3d33.7549371!4d-84.4085856" target="_blank">North and south sides of 643 Martin Luther King Jr. Dr. SW</a></p>
+
+
+<p>Knowles Hall (1884, AU)<br><a href="https://www.google.com/maps/place/668+Beckwith+St+SW,+Atlanta,+GA+30314/@33.7519047,-84.4096006,19z/data=!3m1!4b1!4m5!3m4!1s0x88f50364f128006d:0x7ef316cbee842ed3!8m2!3d33.7519036!4d-84.4090534" target="_blank">Beckwith St. SW</a></p>
+
+
+<p>Graves Hall (1889, Morehouse)<br><a href="https://www.google.com/maps/place/Samuel+T.+Graves+Hall,+Atlanta,+GA+30314/@33.7487285,-84.4160751,18.81z/data=!4m5!3m4!1s0x88f50367dfb2ef89:0x53968dd0e4ec0306!8m2!3d33.7487303!4d-84.4158304" target="_blank">Near the corner of Lowery Boulevard and Atlanta Student Movement Boulevard</a></p>
+
+<p>Spelman's Rockefeller, Packard, Giles, Morehouse-James, MacVicar halls and Reynolds Cottage (1886 - 1901)<br><a href="https://www.google.com/maps/@33.7458715,-84.4118894,18.12z" target="_blank">Along The Oval, near Spelman Lane</a></p></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/auc-gallery/" target="_blank">
+		    		<img src="static/img/auc.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>Dating as far back as 1869, some of Atlanta's oldest buildings also sit in an unusually large collection, on the adjacent campuses of Atlanta (now Clark Atlanta) University, and Morehouse and Spelman colleges.</p>
+
+<p>"I think the architecture is outstanding for this period of time," said architect Arthur Clement of Silverman Construction. He's worked across the state on college builds and renovations and is now working on a book about the architecture and campus development of Georgia's historically black colleges and universities.</p>
+
+<p>Architecture, like fashion, goes in phases, he said.</p> 
+
+<p>The fashion then for folks building multipurpose educational buildings, was red brick with a range of influences: Italianate, Queen Anne, Romanesque Revival.</p>
+
+<p>John D. "Rockefeller used his personal architect ... to design some of the [Spelman] buildings, Morehouse-James Hall, Reynolds Cottage which is where the president resides; you've got the first African-American hospital, MacVicar," said Clement.</p>
+
+<p>"When you look at the plight of African-Americans in Atlanta, you can't not look at these places, campuses, that tended to be the largest areas that were built for them, that they had control and use of in a segregated society," he said.</p>
+
+<p>Nedra Deadwyler also named Gaines and Fountain halls as places to see. She's founder of <a href="https://www.civilbikes.com" target="_blank">Civil Bikes</a>, a tour company that focuses on history, art, culture and Civil Rights sites. What she brings up is the importance of the studies that went on in those buildings, naming in particular sociologist W.E.B. Du Bois.</p>
+
+<p>His years in Atlanta around the turn to the 20th century as an AU professor were <a href="https://www.georgiaencyclopedia.org/articles/history-archaeology/w-e-b-du-bois-georgia" target="_blank">productive but painful</a>. He documented things like the accumulation of land by African-Americans after emancipation and the Georgia prison-industrial system's exploitation of black males. "We had someone of his caliber, who was underrated as a sociologist, his work was studying black people, black Americans, his work never received the credit in mainstream American academia," said Deadwyler.</p>
+
+<p>But Gaines Hall has been damaged for years. It's roofless after a 2015 fire and is part of a custody battle between the city, which has claimed it purchased it and surrounding property from a struggling Morris Brown College, and Clark Atlanta University, which has challenged the sale and claims ownership.</p>
+		   </div>
+
+		   <div>
+		   		
+					<p>Many more buildings are discussed in the <a href="https://npgallery.nps.gov/NRHP/AssetDetail?assetID=38e9b2c1-a061-478c-91af-533903ac343e" target="_blank">Atlanta University Center Historic District</a> documentation on the National Register of Historic Places. It's possible to see many of them on a walk or drive through the area.</p>
+<p>More Info</p>
+<p><a href="https://npgallery.nps.gov/NRHP/AssetDetail?assetID=4723d0db-5cde-499d-ab72-ad97ac7ad642" target="_blank">Fountain Hall (Stone Hall)</a></p>
+
+<p><a href="https://www.atlantaga.gov/government/departments/planning-community-development/office-of-zoning-development/urban-design-commission/graves-hall" target="_blank">Graves Hall</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/auc-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>The Wren&#39;s Nest</h2>
+		   	<br><p>West End</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/1050+Ralph+David+Abernathy+Blvd,+Atlanta,+GA+30310/@33.7355484,-84.4258523,14.79z/data=!4m5!3m4!1s0x88f50340aee240a9:0xb8d1fe2f4d429569!8m2!3d33.7376712!4d-84.4221547" target="_blank">1050 Ralph David Abernathy Blvd.</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/wrens-nest-gallery/" target="_blank">
+		    		<img src="static/img/wrens-nest2.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>The West End home known as The Wren's Nest started life in 1870 as a farm house constructed by George Muse, founder of Muse's Clothing. But the Queen Anne style Victorian home seen today dates from extensive 1884 renovations during the time it was owned by Joel Chandler Harris, writer of the <a href="http://www.georgiaencyclopedia.org/articles/arts-culture/uncle-remus-tales" target="_blank">Uncle Remus folk tales</a>.</p>
+
+<p>It's a beautiful building that evolved from something much simpler, said Derek Anderson, a historian by day, who with his wife and a friend run the <a href="https://www.instagram.com/architecturalsplendor/" target="_blank">Architectural Splendor</a> Instagram account.</p>
+
+<p>"It's located in ... one of my favorite parts of town. West End in general I would say is a neighborhood that has some really incredible architecture," he said.</p>
+
+<p>A horse-drawn trolley line reached West End from Downtown by 1871, helping make it a popular white middle- and upper-class residential suburb around the turn of the 20th century for the likes of former governors and well-to-do folks. Many fine old homes are still standing and are open sometimes on a tour of homes. Check <a href="https://atlantawestend.com" target="_blank">West End Neighborhood Development</a> to read more about the neighborhood, or just have a walk around.</p><p>The Wren's Nest itself is open <a href="http://www.wrensnest.org" target="_blank">as a museum</a>.</p>
+		   </div>
+
+		   <div>
+		   		
+					<p><a href="https://www.atlantaga.gov/government/departments/planning-community-development/office-of-zoning-development/urban-design-commission/the-wren-s-nest-the-joel-chandler-harris-house" target="_blank">More info</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/wrens-nest-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Cabbagetown homes and mill</h2>
+		   	<br><p>Cabbagetown</p>
+		   	<br>
+		   		
+		   			<p>East of Oakland Cemetery</p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/cabbagetown-gallery/" target="_blank">
+		    		<img src="static/img/cabbagetown3.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>The area just east of Oakland Cemetery began its life as a mill village in the 1880s and 1890s. The buildings of the Fulton Bag and Cotton Mills complex were put up between 1895 and 1922, according to the city's <a href="https://npgallery.nps.gov/NRHP/AssetDetail?assetID=778e7909-3717-46df-a887-e09aa8bcac0d" target="_blank">application</a> to put Cabbagetown on the National Register of Historic Places. The homes broadly get newer from the west (about 1885) to the east (the 1920s.)</p>  
+
+<p>"You can kind of see the progression of the different houses of different sizes and different styles in the neighborhood, depending on when they were built, but then also ... depending on whether you were a mill foreman or a maybe a worker just a little lower on the totem pole," said Derek Anderson, the historian.</p>
+
+<p> There were already folks living in the area before the mill opened, but the mill did come to build or own many of the residences there. The home types include tiny shotgun houses, gabled "ell" cottages in a T- or L-shape and multi-family duplexes of a type typical in mill villages.</p>
+
+<p>One legend has it that the name "Cabbagetown" came from the smell of supper one night after a cabbage truck overturned in the neighborhood and people got the produce, one way or another. Another version has it that poor mill folks regularly cooked cabbage, lending their village a name. Another says that people there just grew cabbages. The truth may be <a href="http://www.creativeloafing.com/home/article/13067152/how-did-factory-town-become-cabbagetown" target="_blank">unknowable</a>.</p>
+		   </div>
+
+		   <div>
+		   		
+					<p>More info</p><p><a href="https://npgallery.nps.gov/NRHP/AssetDetail?assetID=778e7909-3717-46df-a887-e09aa8bcac0d" target="_blank">Cabbagetown Historic District</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/cabbagetown-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Rhodes Memorial Hall</h2>
+		   	<br><p>Midtown</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/Rhodes+Hall/@33.795942,-84.3905277,17z/data=!3m1!4b1!4m5!3m4!1s0x88f504519823dfab:0x187b70b948ab4af2!8m2!3d33.7959376!4d-84.3883337" target="_blank">1516 Peachtree St. NW</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/rhodes-hall-gallery/" target="_blank">
+		    		<img src="static/img/rhodes.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>In 1904, Rhodes Hall joined the mansions of Peachtree Street as the home of furniture magnate A.G. Rhodes and his family. From electric light bulbs to stained glass to the huge estate on which it sat, it exuded opulence, arguably the finest jewel on a long string of sparkling residences along Peachtree in the old days. Very few Georgia residences were ever built in such a style.</p>
+<p>It also happens to be in the hands of an excellent steward, The <a href="https://www.georgiatrust.org" target="_blank">Georgia Trust for Historic Preservation</a>, a nonprofit. Their office is there, but is also available for event rental.</p>
+<p>Consider yourself invited in by Trust President and CEO Mark McDonald. "If you haven't been there, you need to see it because we just finished an interior restoration and new landscape," he said. It's open Saturdays, but you can tour at other times by appointment. Check the <a href="https://www.rhodeshall.org" target="_blank">website</a> for details.</p>
+		   </div>
+
+		   <div>
+		   		
+					<p><a href="https://www.atlantaga.gov/government/departments/planning-community-development/office-of-zoning-development/urban-design-commission/rhodes-memorial-hall" target="_blank">More info</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/rhodes-hall-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Interlocking Tower</h2>
+		   	<br><p>Downtown</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/Mitchell+St+SW,+Atlanta,+GA/@33.7533,-84.3976362,18z/data=!4m5!3m4!1s0x88f5037bbb33ff77:0xa53aa99c3d5d86bb!8m2!3d33.7538805!4d-84.4034677" target="_blank">In Gulch, visible from Mitchell St. SW at Russell Plaza</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/interlocking-tower-gallery/" target="_blank">
+		    		<img src="static/img/interlocking-tower.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>Dating from 1905, folks working in the little Interlocking Tower, or "switch tower," set the signals that controlled train traffic around Atlanta's vast Terminal Station. It's thought that the two buildings share the same architect, P. Thornton Marye, who also designed the Fox Theatre.</p>
+
+<p>"The switch tower down there in the Gulch is a little yellow brick building, it has a clay tile roof, it's like this little vestige" of the Terminal Station, said Scott Morris, a historian who works for New South Associates.</p>
+
+<p>For much of the 20th century, Terminal Station is the first thing people saw when they arrived in Atlanta via train, the same way airport is the gateway to the city today. Atlanta's <a href="https://www.atlantaga.gov/government/departments/planning-community-development/office-of-zoning-development/urban-design-commission/hotel-row" target="_blank">Hotel Row</a> was within walking distance on Mitchell Street. In 1933, what's now the Martin Luther King Jr. Federal Building opened as a post office, the location chosen <a href="http://www.facilitiesnet.com/green/article/-GSA-Rehabilitates-Historic-King-Federal-Building-in-Atlanta-Facilities-Management-Green-Feature--13583" target="_blank">because</a> it was close to the rail terminal. Terminal Station closed in 1970 and was later demolished.</p>
+
+<p>Morris said the little tower makes him think when he walks by.</p>
+
+<p>"I think about how it relates to a grand building and to Atlanta's history and the early architecture and the intersection between transportation and architecture," he said.</p>
+
+		   </div>
+
+		   <div>
+		   		
+					<p><a href="http://www.atlantapreservationcenter.com/place_detail?id=48&amp;pt=1&amp;year=all" target="_blank">More info</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/interlocking-tower-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Herndon Home</h2>
+		   	<br><p>Vine City</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/587+University+Pl+NW,+Atlanta,+GA+30314/@33.7558067,-84.4090181,17z/data=!3m1!4b1!4m5!3m4!1s0x88f503632d55244d:0x271ef1849b32aeb2!8m2!3d33.7558023!4d-84.4068241" target="_blank">587 University Pl. NW</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/herndon-home-gallery/" target="_blank">
+		    		<img src="static/img/herndon.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>Complete by 1910, the Herndon Home would never house the woman who designed it, Adrienne Herndon. One-half of an Atlanta power couple, she died just before construction was done on the opulent home she was to share with her husband, <a href="https://www.georgiaencyclopedia.org/articles/business-economy/alonzo-herndon-1858-1927" target="_blank">Alonzo Herndon</a>.</p>
+<p>He was a man born into slavery who made himself into a magnate, first in the barbering business, later in insurance.  She was an actress and a professor at Atlanta University.</p>
+
+<p>The home has a great neoclassical revival style, said Derek Anderson, the historian. And it's notable for having been designed by Adrienne. "Women didn't often get the credit back then for that sort of thing," he said.</p><p>The grand home is now open as <a href="http://www.herndonhome.org/" target="_blank">a museum</a> that showcases the taste of the Herndons and their time.</p><p>Planning a visit? It's on the same block as Gaines Hall and Fountain Hall is one block south.</p>
+
+		   </div>
+
+		   <div>
+		   		
+					<p><a href="https://npgallery.nps.gov/NRHP/AssetDetail?assetID=08a94c16-d96a-45fb-8055-7c2ecf33595f" target="_blank">More info</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/herndon-home-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Odd Fellows Building and Auditorium</h2>
+		   	<br><p>Downtown</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/228+Auburn+Ave+NE,+Atlanta,+GA+30303/@33.7557069,-84.382278,17z/data=!3m1!4b1!4m5!3m4!1s0x88f5038a2de2a005:0x42c55a5482b6d639!8m2!3d33.7557069!4d-84.380084" target="_blank">228-250 Auburn Ave. NE</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/odd-fellows-building-auditorium-gallery/" target="_blank">
+		    		<img src="static/img/odd-fellows.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>Finished in 1912 and 1913 respectively, the Odd Fellows Building and Auditorium rose at a time when Jim Crow was at full strength in the South, legalizing the distant second-class status of black Americans relative to whites. The buildings and their histories evidence some African-American coping strategies in a hostile world: self-help, entrepreneurship, accumulating wealth, spending wealth at black-owned businesses and even elevating skilled labor to a literal work of art.</p>
+
+<p>"Through Jim Crow, it was a space for blacks to go to the theater, they didn't have to sit in a segregated place," said Nedra Deadwyler of Civil Bikes. "There were businesses; entrepreneurs could have storefronts, offices, from banks to the pharmacy, an optometrist, a haberdashery. It was a center of entrepreneurship, a commercial and social space."</p>
+
+<p>The Odd Fellows, one of several fraternal organizations with Auburn Avenue offices, raised the money for the buildings and used the proceeds for the Odd Fellows Endowment Fund. That fund paid benefits to seriously ill members and death benefits to their widows, according to the city's <a href="https://npgallery.nps.gov/NRHP/AssetDetail?assetID=cccd3162-d0fa-46e3-9694-7af5919e3343" target="_blank">application</a> to the National Register of Historic Places. Spearheading the work on the Odd Fellows Building was one of its leaders, Benjamin Jefferson Davis Sr., editor of the Atlanta Independent newspaper. (Check out <a href="https://news.google.com/newspapers?nid=0KrOiVmbFBYC&dat=19131108&b_mode=2&hl=en" target="_blank">scans of the paper</a> from September and October 1913 for its auditorium opening coverage.) </p>
+
+<p>Deadwyler pointed out that sculptures outside Odd Fellows show people who have recognizably African features.</p>
+
+<p>"Their hands are at work ... they're holding mallets and hammers. It really goes to speak to the ethos of the builders, the Order of the Odd Fellows," she said.</p>
+		   </div>
+
+		   <div>
+		   		
+					<p><a href="https://npgallery.nps.gov/NRHP/AssetDetail?assetID=cccd3162-d0fa-46e3-9694-7af5919e3343" target="_blank">More info</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/odd-fellows-building-auditorium-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Healey Building</h2>
+		   	<br><p>Downtown</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/57+Forsyth+St+NW,+Atlanta,+GA+30303/@33.7561061,-84.3920441,17z/data=!3m1!4b1!4m5!3m4!1s0x88f5038721592c47:0x9c9f3f92126f97ed!8m2!3d33.7561017!4d-84.3898501" target="_blank">57 Forsyth St. NW</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/healey-building-gallery/" target="_blank">
+		    		<img src="static/img/healey-bldg2.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>Completed in 1914, the Healey Building carries the name of a family of early Atlanta developers. William Healey ran the company when it was built.</p><p>It was a skyscraper by the standards of the day. And had World War I not started, it might have been two skyscrapers: original plans called for twin towers.</p><p>Mark McDonald, from the Georgia Trust, said it's one of his favorites.</p><p> "It's got a Gothic Revival interior in the atrium. It's quite a 'big city' building and it really shows how prominent Atlanta was in the late 19th and early 20th century, the sophistication architects brought to the city," he said.</p><p>It's a private building today, but there is a coffee shop on the ground floor that has some seats looking into the lobby.</p>
+		   </div>
+
+		   <div>
+		   		
+					<p><a href="https://www.atlantaga.gov/government/departments/planning-community-development/office-of-zoning-development/urban-design-commission/healey-building" target="_blank">More info</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/healey-building-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Capitol View Masonic Lodge</h2>
+		   	<br><p>Capitol View</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/633+Dill+Ave+SW,+Atlanta,+GA+30310/@33.7184168,-84.4103348,17z/data=!3m1!4b1!4m5!3m4!1s0x88f5031ce86319d3:0x9703c9d3eb97eaf!8m2!3d33.7184124!4d-84.4081461" target="_blank">633 Dill Ave. SW</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/capitol-view-masonic-lodge-gallery/" target="_blank">
+		    		<img src="static/img/capitol-view-masonic.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>The Capitol View Masonic Lodge was completed in 1922, with space for retail on the first floor, and an auditorium, offices and ritual space on upper floors, according to a neighborhood application to join the National Register of Historic Places. (Available as a <a href="https://www.nps.gov/nr/feature/places/pdfs/16000195B.pdf" target="_blank">very large PDF</a>.)</p> 
+
+<p>Scott Morris, the historian, said that he thinks it is the kind of thing that gives "mixed-use building" a good name, not the image often conjured up of an overwhelming huge new development.</p>
+
+<p>"It's this truly mixed-use building that was designed to serve a neighborhood. I think it's a great-looking building and just kind of a cool reflection of that first half of the 20th century, a big, neighborhood kind of mixed-use building," he said.</p>
+		   </div>
+
+		   <div>
+		   		
+					
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/capitol-view-masonic-lodge-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Ponce City Market </h2>
+		   	<br><p>Old Fourth Ward</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/675+Ponce+De+Leon+Ave+NE,+Atlanta,+GA+30308/@33.7725217,-84.3681613,17z/data=!3m1!4b1!4m5!3m4!1s0x88f5041092e30dc1:0xf67d9c16e2a73fc7!8m2!3d33.7725173!4d-84.3659673" target="_blank">675 Ponce De Leon Ave. NE</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/?p=67507&amp;preview=true" target="_blank">
+		    		<img src="static/img/pcm.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		  <p>What opened in 2014 as <a href="http://www.poncecitymarket.com" target="_blank">Ponce City Market</a> debuted as a Sears, Roebuck and Co. store and warehouse in 1926. In between, parts of it housed a branch of city hall, a trade show space, a gym and other tenants.</p><p>Today, light shines through its massive windows into residences, shops and a food hall adorned with old machinery, a nod to the masses of merchandise that used to move through its levels.</p>
+
+<p>The overhaul is a "game-changer," said architect Bill Clark, incoming president of the Atlanta chapter of the American Institute of Architects. Though, he admits to a little bias: he's also Atlanta office president of Stevens & Wilkinson, a firm that worked on residential parts of the PCM redo.</p>
+
+
+<p>"To me, it's just changed the whole architectural approach to older architecture in our city," said Clark.</p>
+
+<p>"It put us on the radar I think, to show that we can be in that realm of architecture and be stewards of older architecture and do it well and be attractive. I think a lot of the buildings the older structures, along the BeltLine for instance, are taking cues from that," he said.</p>
+
+		   </div>
+
+		   <div>
+		   		
+					<p><a href="http://georgiashpo.org/pressrelease-searsbuilding" target="_blank">More info</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/?p=67507&amp;preview=true" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Southern Bell Telephone Company Building</h2>
+		   	<br><p>Downtown</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/51+Peachtree+Center+Ave+NE,+Atlanta,+GA+30303/@33.7558833,-84.3875616,17z/data=!3m1!4b1!4m5!3m4!1s0x88f503887c0d8bcd:0xd059cac0d2354738!8m2!3d33.7558833!4d-84.3853676" target="_blank">51 Peachtree Center Ave. NE</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/southern-bell-telephone-company-building-gallery/" target="_blank">
+		    		<img src="static/img/bell.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>The Southern Bell Telephone Company Building isn't quite what it might have been. Opened in 1929 and still impressive, it's actually only about half as tall as originally envisioned.</p>
+
+<p>"It was pre-Depression ... Southern Bell wanted to express that telecommunications were this powerful thing, and they were going to represent that power with this big Art Deco building," said Scott Morris, the historian.</p>
+
+<p>It's a little more tame than say, New York City Art Deco, he said, but it's still got those streamlined qualities, geometric relief sculptures, lighting, all in that style.</p>
+
+<p>That kind of early modern style, seen on buildings like the MLK federal building and the 1930 part of City Hall, are stylistically representative of the idea of Atlanta as this city of progress at the time, he said.</p>
+
+<p>It is the only good example in Atlanta of the "modernistic style," according to a <a href="https://npgallery.nps.gov/NRHP/AssetDetail?assetID=67fe0811-1cfb-4ff6-8ff5-2d61444f1c91" target="_blank">statement</a> prepared by the city to nominate the building to the National Register of Historic Places. The same article points out that it's very different from more of a throwback-inspired building that opened about the same time: the Fox Theatre.</p> <p>Today, signs out front carry the name of the successor company: AT&T.</p>
+		   </div>
+
+		   <div>
+		   		
+					<p><a href="https://npgallery.nps.gov/NRHP/AssetDetail?assetID=67fe0811-1cfb-4ff6-8ff5-2d61444f1c91" target="_blank">More info</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/southern-bell-telephone-company-building-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Philip Shutze works: Spring Hill Chapel and The Temple</h2>
+		   	<br><p>Midtown</p>
+		   	<br>
+		   		
+		   			<p><p>Spring Hill Chapel (1928)<br>
+<a href="https://www.google.com/maps/place/1020+Spring+St+NW,+Atlanta,+GA+30309/@33.7824677,-84.3918752,17z/data=!3m1!4b1!4m5!3m4!1s0x88f5045dbf606d69:0x5b5a40262b847778!8m2!3d33.7824633!4d-84.3896812" target="_blank">1020 Spring St. NW</a>
+</p>
+
+<p>The Temple (1931)<br>
+<a href="https://www.google.com/maps/place/1589+Peachtree+St+NW,+Atlanta,+GA+30309/@33.7985957,-84.3912839,17z/data=!3m1!4b1!4m5!3m4!1s0x88f50453db551d4b:0x6fa95694105d096f!8m2!3d33.7985913!4d-84.3890952" target="_blank">1589 Peachtree St. NW</a></p></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/shutze-gallery/" target="_blank">
+		    		<img src="static/img/temple2.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p><a href="https://www.georgiaencyclopedia.org/articles/arts-culture/philip-trammell-shutze-1890-1982" target="_blank">Philip Trammell Shutze</a>, born in 1890, was already renowned in his lifetime for his elegant work. In Atlanta alone, his existing buildings include the <a href="http://www.atlantahistorycenter.com/explore/destinations/swan-house" target="_blank">Swan House</a> at the Atlanta History Center and the <a href="https://www.nps.gov/nr/feature/places/13000215.htm" target="_blank">Goodrum House</a> at 320 West Paces Ferry Road.</p>
+
+<p>His H.M. Patterson & Son Spring Hill Chapel opened in 1928. The Midtown mortuary is endangered now because it's on such a large piece of property, said Mark McDonald, from the Georgia Trust.</p>
+<p>"I would say people need to see that one because it may not be with us much longer," he said.</p>
+
+<p>Shutze also designed <a href="http://www.the-temple.org/" target="_blank">The Temple</a>, which opened in 1931 as a new home for Atlanta's oldest Jewish congregation, a force in pushing for a more educated and fair city.</p>
+
+<p>In the 19th century, years before the current Temple was built, the first rabbi of the congregation founded a school which is seen as a forerunner of Atlanta Public Schools. Over the years congregation members organized to fight for the likes of an eight-hour work day and the end of child labor.</p>
+
+<p>The Temple itself was <a href="http://www.georgiaencyclopedia.org/articles/arts-culture/temple-bombing" target="_blank">bombed</a> in 1958, because of some combination of anti-Semitism and Rabbi Jacob Rothschild's vocal support for black civil rights, racial integration and his friendship with Dr. Martin Luther King Jr.</p>
+
+<p>History is one, but only one, reason why Bill Clark, the architect, named it among buildings to see.</p>
+
+<p>"Not only was it designed by Philip Shutze, but it's timeless. And there's just so much incredible history there," said Clark, who has worked on renovations to the classical-inspired red brick edifice.</p>
+
+<p>"I think some cities can be judged in some respects by their public architecture, their religious architecture and their museums. And this is just a wonderful example of architecture in the religious realm," he said.</p>
+		   </div>
+
+		   <div>
+		   		
+					<p>More info</p><p><a href="http://www.dignitymemorial.com/hm-patterson-son-spring-hill-chapel/en-us/index.page" target="_blank">H.M. Patterson & Son Spring Hill Chapel</a></p>
+<p><a href="https://npgallery.nps.gov/NRHP/AssetDetail?assetID=4e47611b-7bdc-4481-aec4-910989c30a17" target="_blank">The Temple</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/shutze-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Georgia Tech: early examples of Modern Architecture</h2>
+		   	<br><p>Midtown</p>
+		   	<br>
+		   		
+		   			<p><p>Hinman Research Building (1939)<br>
+<a href="https://www.google.com/maps/place/Hinman+Building/@33.7746287,-84.3972506,17z/data=!3m1!4b1!4m5!3m4!1s0x88f504621ce06b6b:0x548122394f4845f3!8m2!3d33.7746243!4d-84.3950566" target="_blank">723 Cherry St. NW</a></p>
+<p>East Architecture Building (1952)<br>
+<a href="https://www.google.com/maps/place/245+4th+St+NW,+Atlanta,+GA+30318/@33.7762697,-84.3979021,17z/data=!3m1!4b1!4m5!3m4!1s0x88f50461e530fbcb:0xb37efefcab193919!8m2!3d33.7762653!4d-84.3957081" target="_blank">245 4th St. NW</a></p><p>Sterling Price Gilbert Sr. Library (1953)<br>
+<a href="https://www.google.com/maps/place/266+4th+St+NW,+Atlanta,+GA+30313/@33.7749247,-84.3986088,17z/data=!3m1!4b1!4m5!3m4!1s0x88f5048ebf23290f:0xf6d631a9fc3f4198!8m2!3d33.7749203!4d-84.3964148" target="_blank">266 4th St. NW</a></p></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/georgia-tech-modern-gallery/" target="_blank">
+		    		<img src="static/img/tech-modernism.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>One of the first places in Georgia to see the influence of a key modern design school from Europe was another school: Georgia Tech.</p><p>P.M. Heffernan taught at Georgia Tech starting in 1938, and he was made director of the school of architecture in 1956.</p>
+
+<p>Heffernan's time as director of the school of architecture saw a shift from Beaux Arts, classical style education to a more modern approach influenced by the Bauhaus, said architect Nathan Koskovich, principal of <a href="http://www.koskovicharchitecture.com" target="_blank">Koskovich Architecture</a> and board chair of Atlanta's <a href="http://www.adcatl.org" target="_blank">Architecture and Design Center</a>, a nonprofit that aims to promote high quality design and connect Atlanta's design culture to the world.</p>
+
+<p>Due to the purchasing rules of the time, Heffernan and other professors at Georgia Tech were able to design buildings on campus. "This lead to Georgia Tech having many of Georgia's earliest examples of Modern Architecture," he said.</p>
+		   </div>
+
+		   <div>
+		   		
+					<p>More info</p><p><a href="https://design.gatech.edu/hinman-research-building" target="_blank">Hinman Research Building</a></p>
+<p><a href="https://design.gatech.edu/buildings-and-facilities#East%20Architecture%20Building" target=_"blank">East Architecture Building</a></p>
+<p><a href="http://philanthropy.gatech.edu/building/judge-s-price-gilbert-memorial-library" target=_"blank">Sterling Price Gilbert Sr. Library</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/georgia-tech-modern-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Rollins Inc. corporate office</h2>
+		   	<br><p>Armour</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/2170+Piedmont+Rd+NE,+Atlanta,+GA+30324/@33.8161934,-84.3695022,17z/data=!3m1!4b1!4m5!3m4!1s0x88f505c4ff7a4d2f:0xd3afa8089ffa621e!8m2!3d33.8161934!4d-84.3673082" target="_blank">2170 Piedmont Rd. NE</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/rollins-gallery/" target="_blank">
+		    		<img src="static/img/rollins.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>It's easy to speed by the long, low Rollins office building on Piedmont Road by the MARTA rail yard. But if you don't slow down or you're not on foot, you'll miss a fantastic example of the midcentury modern aesthetic, according to Scott Morris, the historian.</p>
+
+<p>The Orkin pest control corporation moved into their newly constructed headquarters <a href="http://www.orkin.net/history/" target="_blank">in 1963</a>. The sign out front now says "Rollins" as well, for the company that took over Orkin. The building still looks like the future that The Jetsons promised us.</p>
+
+<p>Though we don't have flying cars, the building does communicate with the street and pedestrians via stairs to the sidewalk. Morris admits to having peeked in the windows and reports period touches like wood paneling and red carpet.</p>
+
+<p>"It's this cool, interesting, modern for the period, Modernist architecture, corporate campus that really is representative of that era, of the 1960s, of commercial and economic development for the company and for the time period," he said.</p>
+
+<p>Going to visit? Pair it with Henri Jova's nearby <a href="http://docomomo-ga.weebly.com/blog/henri-jovas-round-bank" target="_blank">'round bank'</a> at 2160 Monroe Dr. NE.</p>
+		   </div>
+
+		   <div>
+		   		
+					<p><a href="http://www.orkin.net/history/" target="_blank">More info</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/rollins-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Hyatt Regency</h2>
+		   	<br><p>Downtown</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/265+Peachtree+St+NW,+Atlanta,+GA+30303/@33.7616013,-84.3889723,17z/data=!3m1!4b1!4m5!3m4!1s0x88f50479c95e0d3d:0x9ce3233220faf25!8m2!3d33.7615969!4d-84.3867836" target="_blank">265 Peachtree St. NW</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/hyatt-regency-gallery/" target="_blank">
+		    		<img src="static/img/hyatt.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>The <a href="https://atlanta.regency.hyatt.com/en/hotel/home.html" target="_blank">Hyatt Regency</a> opened Downtown in 1967. A few years later, a high school boy from Tennessee visited.</p>
+
+<p>"It just totally blew me away, coming from a small town, I had never seen anything like that before," said Bill Clark. It cemented his plan to become an architect.</p>
+
+<p>It was an early building from one of the world's best-known architect-developers: <a href="http://www.georgiaencyclopedia.org/articles/arts-culture/john-portman-b-1924" target="_blank"></a>John Portman</a>. Born in South Carolina, his distinctive buildings tower blocks and blocks of the city where he grew up and made his career: <a href="http://peachtreecenter.com" target="_blank">Peachtree Center</a>, <a href="https://www.americasmart.com" target="_blank">AmericasMart</a>, <a href="http://www.westinpeachtreeplazaatlanta.com/gallery" target="_blank">Westin Peachtree Plaza</a> and the <a href="https://www.marriott.com/hotels/hotel-photos/atlmq-atlanta-marriott-marquis/" target="_blank">Marriott Marquis</a>.</p>
+
+<p>Portman's Hyatt took a modern approach to the age-old concept of an atrium: an open space inside a building. But in the Hyatt's case, it's a stunning open space 22 stories high, ringed by halls, pierced by elevators and covered with a skylight.</p>
+
+<p>"At the time it was cutting-edge, and pretty risky," said Clark. "What an important building in our city too."</p>
+
+<p><a href="https://www.portmanusa.com/en/?lite_escape=1" target="_blank">Portman's own designs</a> now soar into skylines all over Asia, and his work has influenced architects worldwide.</p>
+
+		   </div>
+
+		   <div>
+		   		
+					
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/hyatt-regency-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>King Memorial Transit Station</h2>
+		   	<br><p>Sweet Auburn</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/King+Memorial+Transit+Station/@33.7499749,-84.3777701,17z/data=!3m1!4b1!4m5!3m4!1s0x88f5038ce4171bd1:0x88e58117238d9de8!8m2!3d33.7499705!4d-84.3755814" target="_blank">377 Decatur St. SE</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/king-memorial-marta-gallery/" target="_blank">
+		    		<img src="static/img/king-memorial.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>Since the day in 1979 when it opened, there's been a skyline view from King Memorial MARTA station, between the elevator and the ticket machines. Depending on the light, the time of year, the time of day, the feel in the station itself is different.</p>
+
+<p>"I kind of look at King Memorial MARTA station as this sculpture in the sky, these crazy concrete forms, there are these staircases and elevators cascading off of it," said Scott Morris, the historian. From the platform upstairs, the openings alternately reveal and hide the light and the views toward Cabbagetown, Sweet Auburn and Downtown.</p>
+
+<p>Morris said he credits the development of MARTA itself with helping to spark interest in public art, like the sculpture "Aspirations" at the station.</p>
+
+<p>But that clear skyline view? It's on par with the one from the Jackson Street bridge, the one at the start of the TV show "Atlanta," said Morris. But it's also outside the gate: you don't have to pay $2.50 to see it.</p>
+		   </div>
+
+		   <div>
+		   		
+					
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/king-memorial-marta-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Atlanta Central Library</h2>
+		   	<br><p>Downtown</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/Atlanta+Central+Library/@33.7576347,-84.3901682,17.18z/data=!4m8!1m2!2m1!1sone+margaret+mitchell+square+nw!3m4!1s0x88f50387757635cb:0x6fa6fe1e5b28a608!8m2!3d33.7577399!4d-84.3884272" target="_blank">One Margaret Mitchell Square</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/atlanta-fulton-central-library-gallery/" target="_blank">
+		    		<img src="static/img/central-library.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>Opened in 1980, the Central Library and headquarters of the Atlanta-Fulton Public Library System has its fans and those who aren't so much.</p><p>It looks like a <a href="http://www.creativeloafing.com/news/article/13086587/library-system-debates-downsizing-and-iconic-central-branch-is-caught-in-the-middle" target="_blank">jail</a>, said Robb Pitts in 2016, who was then out office but is about to be sworn in as the Fulton County Commission chair. That was amid talk of downsizing or closing the library and replacing it with a new structure.</p>
+<p>But the folks of the <a href="http://www.adcatl.org" target="_blank">Architecture and Design Center</a> are among its fans. They started a petition urging the library board to protect it from any demolition or damaging renovation.</p>
+<p>It's by architect Marcel Breuer. The Central Library wasn't only his last work, but his greatest, said Nathan Koskovich, the architect who chairs ADC.</p>
+<p>The Hungarian-born Breuer, later in his career, experimented with forms that had the monumentality of classical architecture but were distinctly modern, Koskovich said. He said it features a Breuer signature idea called "heavy lightness," characterized by concrete forms that increase in size as they go up over an apparently fragile glass base. Yet it's got a human-scaled entry portico. He said he thinks the exterior panels on the library are more interesting than at the perhaps more famous Met Breuer Museum in New York. On the library here, the cross-hatching reveals warm colored stone aggregate, and placement of panels work with the weather to create a shadowlike pattern on the panels. The courtyard on top is one of the nicest spaces in Atlanta, he thinks.</p> 
+<p>"While the monumental style of the building is foreign to a lot of people,  I think the lack of proper maintenance, and some unfortunate renovations have really muted the qualities of the building," he said.</p>
+
+		   </div>
+
+		   <div>
+		   		
+					<p><a href="http://www.afpls.org/central-library" target="_blank">More info</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/atlanta-fulton-central-library-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>The King Center for Nonviolent Social Change</h2>
+		   	<br><p>Sweet Auburn</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/449+Auburn+Ave+NE,+Atlanta,+GA+30312/@33.7552515,-84.3751203,17z/data=!3m1!4b1!4m5!3m4!1s0x88f503f501661cc5:0x10bcb5db70156f14!8m2!3d33.7552471!4d-84.3729263" target="_blank">449 Auburn Ave. NE</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/king-center-nonviolent-social-change-gallery/" target="_blank">
+		    		<img src="static/img/king-profile.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>Today's Sweet Auburn is vibrant, many of its landmarks are preserved, and there are monuments to Dr. Martin Luther King Jr. in several parts of the city. But it wasn't always like that. The road to all that goes right through a 1981 building.</p>
+
+<p>What's now the <a href="http://www.thekingcenter.org" target="_blank">King Center for Nonviolent Social Change</a> started in 1968, when an assassin made Coretta Scott King a widow and she began efforts to memorialize her husband and his work.</p>
+
+<p>And the headquarters would be in Sweet Auburn. The 1970 crypt was just the first step.</p>
+
+<p>"To Coretta Scott King's credit, she used the King Center as a way to revitalize that neighborhood," said Arthur Clement, the architect.</p>
+
+<p>He said the ensemble of buildings is important in one way for the design by <a href="http://www.nytimes.com/2009/02/19/arts/design/19bond.html" target="_blank"></a>J. Max Bond</a>. The Center houses archives, an auditorium, exhibits and offices under its barrel-shaped roofs and within its brick walls, which wrap around the outdoor fountain and crypt. But the Center is also important for all its preservation and memorial efforts.</p>
+
+<p>When Coretta King got started, there was no national historic site, King's birth home wasn't open to visitors and there was no King holiday.</p>
+
+<p>"Coretta Scott King had an uphill battle to build the Center, to get the holiday established.  We come along now and accept that as a fait accompli but it was not," said Clement.</p>
+		   </div>
+
+		   <div>
+		   		
+					<p><a href="https://npgallery.nps.gov/NRHP/AssetDetail?assetID=aed2eed0-43c2-4073-b83b-1277caacc2c9" target="_blank">More info</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/king-center-nonviolent-social-change-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>High Museum</h2>
+		   	<br><p>Midtown</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/1280+Peachtree+St+NW,+Atlanta,+GA+30309/@33.7891626,-84.3871291,17z/data=!3m1!4b1!4m5!3m4!1s0x88f5045ad13b623f:0x41f6bd9d4b80a371!8m2!3d33.7891582!4d-84.3849351" target="_blank">1280 Peachtree St. NW</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/high-museum-gallery/" target="_blank">
+		    		<img src="static/img/high.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>Architect Richard Meier's <a href="https://www.high.org" target="_blank">High Museum</a> opened in 1983; in 2005, an addition by architect Renzo Piano opened.</p>
+
+<p>They move the city further along a journey, in Bill Clark's judgment.</p>
+
+<p>"It goes back to, you judge cities on their public architecture, their nonprofits, and their art and culture," he said. Atlanta is somewhere in the middle of a journey, he said, and doesn't compare to places like New York and Chicago. But the formation of a museum and the construction of such a home for it is important.</p>
+
+<p>"We had two of the basically the worlds most significant architects ... just creating a culturally rich, wonderful building. It continues just to get better and better," he said.</p>
+
+<p>Clement adds the adjacent <a href="http://woodruffcenter.org" target="_blank">Woodruff Arts Center</a> and the outdoor space created among the buildings into his reasons for visiting the complex.</p>
+
+<p>"You go up there and it's an active area, they have artwork, I think that's a very successful example of buildings working together to enhance the life of the city, where people can come and congregate, do different things," he said.</p>
+		   </div>
+
+		   <div>
+		   		
+					<p><a href="https://www.georgiaencyclopedia.org/articles/arts-culture/high-museum-art" target="_blank">More info</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/high-museum-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>Krog Street tunnel</h2>
+		   	<br><p>Cabbagetown and Reynoldstown</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/Krog+Street+Tunnel/@33.7529948,-84.3658419,17z/data=!3m1!4b1!4m5!3m4!1s0x88f503f9ebb61235:0x4fde145848c7a41!8m2!3d33.7529948!4d-84.3636479" target="_blank">Krog Street between DeKalb Avenue and Wylie Street</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/krog-street-tunnel-gallery/" target="_blank">
+		    		<img src="static/img/krog.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>It's true, the Krog Street tunnel isn't a building, but it is a landmark because of the way people make the concrete canvas their own.</p>
+
+<p>Folks have been probably been tagging the tunnel for decades. But a look through the AJC stacks suggests a turn from hasty vandalism to painters of a more expressive frame of mind came in the last years of the 20th century. The tunnel itself dates from 1913, according to a carving  along the Wylie Street side.</p>
+
+<p>The art and messages in the tunnel change every time someone shows up with a paintbrush or a new stencil: a shrimp with the head of Donald Trump, a grinning gold-toothed rat, blue Frankenstein with headphones, an announcement about a holiday market. And if you're not driving, you're probably taking pictures.</p>
+
+<p>Marc Johnson admits the first time he saw the Krog Street tunnel, he, well, thought it was an "eyesore." But now, the architect at Fitzgerald Collaborative Group said he's grown to appreciate it.</p>
+
+<p>"It just strikes me, I love the energy," Johnson said.</p>
+		   </div>
+
+		   <div>
+		   		
+					
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/krog-street-tunnel-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+		   <div><hr></div>
+
+		   <div style="text-align:center"><h2>National Center for Civil and Human Rights</h2>
+		   	<br><p>Downtown</p>
+		   	<br>
+		   		
+		   			<p><a href="https://www.google.com/maps/place/Center+for+Civil+and+Human+Rights/@33.763939,-84.3952557,17z/data=!3m1!4b1!4m5!3m4!1s0x88f5047e9e2e3925:0xe793259d9327c018!8m2!3d33.763939!4d-84.3930617" target="_blank">100 Ivan Allen Jr Blvd. NW</a></p>
+		   		
+		   </div>
+
+		   <div style="text-align:center">
+		   		<a href="https://saportareport.com/national-center-civil-human-rights-gallery/" target="_blank">
+		    		<img src="static/img/civil-human.jpg" height="300px" width="300px" float="left">
+		    	</a>
+		   </div>
+
+		   <div>
+		   		 <p>The <a href="http://civilandhumanrights.org" target="_blank">National Center for Civil and Human Rights</a> opened in 2014, houses exhibits not about the distant, unknown past, but about things that are well within living memory: mugshots of Freedom Riders, a lunch counter sit-in simulation. 
+
+<p>Many visitors probably feel a personal connection. Architect Marc Johnson does.</p>
+
+<p>For him, the Center came with a feeling of personal responsibility too. He worked on it, tackling problems like how to make sure papers of Martin Luther King Jr. are protected from any threat of damage.</p>
+
+<p>"Working on that was protecting my bedtime stories," said Johnson. "Just, as an African-American kid growing up in Los Angeles, I'd hear a lot of stories from my parents, my grandparents, my great-grandparents, some of those stories manifested visually in the gallery of the Center for Civil and Human Rights. I took that personally, 'I need to protect this.'"</p>
+		   </div>
+
+		   <div>
+		   		
+					<p><a href="http://civilandhumanrights.org" target="_blank">More info</a></p>
+				
+		   </div>
+
+		   <div>
+		   		
+		   		
+		   			<p><a href="https://saportareport.com/national-center-civil-human-rights-gallery/" target="_blank">Gallery</a></p>
+		   		
+		   </div>
+
+	    
+	    
+
+
+		</table>
+	</div> <!-- close div.article-text -->
+    </body>
+</html>

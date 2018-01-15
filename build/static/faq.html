@@ -1,0 +1,64 @@
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+       
+
+
+    </head>
+    <body>
+        <div class="article-text">
+        	<p><h1>FAQs and sources</h1></p>
+
+			<p><b>Q: You mentioned some construction year shortcomings. What are they, where is this data from?</b></p>
+            
+            <p>A: The data came from several places.</p>
+
+            <p>The map of building footprints is based on one published by the city of Atlanta. SR filtered out buildings less than 120 square feet (that's mostly garden sheds, carports and the like.) That map is publicly available from SR <a href="https://maggielee.carto.com/tables/building_footprints_small" target="_blank">via CARTO</a>.</p>
+
+            <p>Atlanta, in turn, based much of its map on one by Fulton County. <a href="http://gisdata.fultoncountyga.gov/datasets/structures?geometry=-84.409%2C33.753%2C-84.363%2C33.766" target="_blank">It is availble here, with footnotes on how they assembled the building outlines</a> via the likes of tax records and even aerial photography.</p>
+
+            <p>The building outlines are most reliable for single buildings that sit on a single parcel, like single-family homes. In those cases, it's pretty pretty straightforward to use mapping software to match a building footprint with the tax parcel on which it sits, and then assign a construciton year to the buiding from that tax record. The vast majority of Atlanta buildings are single-family homes.</p>
+
+            <p>Now the shortcomings.</p>
+
+            <p>Where buildings are very close together (like Downtown), or are connected by a skybridge, they often incorrectly show up merged together as one large building rather than as several smaller ones. That's because some of the map is constructed from aerial photographs. The photographs were cutting-edge years ago when they were made, but when digitized, they could not resolve the difference buildings that were touching, or practically touching.</p>
+
+            <p>We've gone through and correctly resolved the footprints of several dozen major buildings, mostly in Downtown and South Downtown.</p>
+
+            <p>But where buildings are close together or where they're incorrectly merged, the wrong year might be attached. And having to assign exactly one year to everything on a parcel means some subtelty gets lost.</p>
+
+            <p>For example, the parking deck at the Northyards Boulevard development was not built in 1925. But some of the buildings on that parcel are that old, according to tax records, and that's the label that Fulton County assigned to the whole complex on when it made the building age map.</p>
+
+            <p>Atlanta's buildng age map lacked DeKalb construction year data, so using mapping software, SR attached a construction year to each building, based on tax data from the parcel on which it sits.</p>
+
+            <p>In the very few cases of one building crossing several parcels in DeKalb, SR assigned it no year. In the very few cases of several buildings all on one parcel (like the East Lake Golf Club), each building gets assigned the same year, the earliest year for the parcel.</p>
+
+            <p>Now there's just one more to talk about: if there are any known issues with the tax records themselves.</p>
+
+            <p>For example, data is noticably lacking on college campuses, for other publicly owned buildings and at Fort McPherson. That may have something to do with their property tax treatment or may be because the properties have not changed hands often. However, Fulton County did not reply to written questions or make anyone from the tax assessor's office or the superior court avaialble for an on-background conversaion about how building years are determined or why public buildings are missing data.</p>
+
+            <p>SR added construction year data to some large, old or landmark buildings where it was missing. In those cases, construction year data came from Atlanta's <a href="https://www.atlantaga.gov/government/departments/planning-community-development/office-of-zoning-development/urban-design-commission/property-district-information" target="_blank">landmark and historic building registry</a>,  the <a href="https://www.georgiaencyolopedia.org" target="_blank">New Georiga Encyclopedia</a>, buildings' web sites, media coverage, Franklin Garrett's "Atlanta and Environs" or <a href="https://npgallery.nps.gov/nrhp" target="_blank">National Register of Historic Places</a> documentation.</p>
+
+            <p><b>Q: Where's the new Mercedes-Benz stadium?</b></p>
+
+            <p>A: This map and data ends in 2015. We don't have any newer data, so this is more like a look at the past.</p>
+
+            <p>This map does not include the Emory University campus and nearby areas that are to join the city on Jan. 1, 2018.</p>
+
+            <p><b>Q: What are the sources for the text?</b></p>
+
+            <p>A: The interviewees, for one.</p>
+            <p>But for building background and years, the sources are as above, Atlanta's historic building registry, the New Georgia Encyclopedia and so on.</p>
+            <p>The sources don't always agree. SR went with the most commonly cited year of construction or official opening.</p>
+            
+            
+
+
+
+
+
+
+        </div> <!-- class="article-text" -->
+    </body>
+</html>
